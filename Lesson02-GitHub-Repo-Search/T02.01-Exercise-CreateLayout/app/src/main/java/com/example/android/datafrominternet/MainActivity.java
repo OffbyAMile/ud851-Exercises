@@ -17,22 +17,29 @@ package com.example.android.datafrominternet;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    // TODO (26) Create an EditText variable called mSearchBoxEditText
+    EditText mSearchBoxEditText;
+    TextView mUrlDisplayTextView;
+    TextView mSearchResultsTextView;
 
-    // TODO (27) Create a TextView variable called mUrlDisplayTextView
-    // TODO (28) Create a TextView variable called mSearchResultsTextView
+    //Create an EditText variable called mSearchBoxEditText
+    //Create a TextView variable called mUrlDisplayTextView
+    //Create a TextView variable called mSearchResultsTextView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mSearchBoxEditText = (EditText) findViewById(R.id.et_search_box);
+        mUrlDisplayTextView = (TextView) findViewById(R.id.tv_url_display);
+        mSearchResultsTextView = (TextView) findViewById(R.id.tv_github_search_results_json);
 
-        // TODO (29) Use findViewById to get a reference to mSearchBoxEditText
-
-        // TODO (30) Use findViewById to get a reference to mUrlDisplayTextView
-        // TODO (31) Use findViewById to get a reference to mSearchResultsTextView
+        //Use findViewById to get a reference to mSearchBoxEditText
+        // Use findViewById to get a reference to mUrlDisplayTextView
+        // Use findViewById to get a reference to mSearchResultsTextView
     }
 }
