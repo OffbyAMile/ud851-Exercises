@@ -15,4 +15,5 @@
   -->
 <resources>
     <string name="app_name">Project Setup</string>
+    <string name="not_text">Android Toys</string>
 </resources>
