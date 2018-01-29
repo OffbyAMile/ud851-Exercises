@@ -128,12 +128,12 @@ public class VisualizerActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-
-        }
+        int id = item.getItemId();
+            if (id == R.id.action_settings) {
+                Intent settingsActivity = new Intent(this, SettingsActivity.class);
+                startActivity(settingsActivity);
+                return true;
+            }
         return super.onOptionsItemSelected(item);
     }
 // COMPLETE (1) Create a new Empty Activity named SettingsActivity; make sure to generate the
