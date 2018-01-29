@@ -15,8 +15,10 @@
  */
 package com.example.android.asynctaskloader;
 
+import android.app.LoaderManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +33,7 @@ import java.io.IOException;
 import java.net.URL;
 
 // TODO (1) implement LoaderManager.LoaderCallbacks<String> on MainActivity
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<String> {
 
     /* A constant to save and restore the URL that is being displayed */
     private static final String SEARCH_QUERY_URL_EXTRA = "query";
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String SEARCH_RESULTS_RAW_JSON = "results";
 
     // TODO (2) Create a constant int to uniquely identify your loader. Call it GITHUB_SEARCH_LOADER
+    private static final int GITHUB_SEARCH_LOADER = 22;
 
     private EditText mSearchBoxEditText;
 
@@ -92,10 +95,11 @@ public class MainActivity extends AppCompatActivity {
         URL githubSearchUrl = NetworkUtils.buildUrl(githubQuery);
         mUrlDisplayTextView.setText(githubSearchUrl.toString());
 
-        // TODO (18) Remove the call to execute the AsyncTask
-        new GithubQueryTask().execute(githubSearchUrl);
+
 
         // TODO (19) Create a bundle called queryBundle
+        Bundle queryBundle = new Bundle();
+        queryBundle.putString(SEARCH_QUERY_URL_EXTRA, githubSearchUrl.toString());
         // TODO (20) Use putString with SEARCH_QUERY_URL_EXTRA as the key and the String value of the URL as the value
 
         // TODO (21) Call getSupportLoaderManager and store it in a LoaderManager variable
@@ -129,6 +133,21 @@ public class MainActivity extends AppCompatActivity {
         mSearchResultsTextView.setVisibility(View.INVISIBLE);
         /* Then, show the error */
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public Loader<String> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
     }
 
     // TODO (3) Override onCreateLoader
