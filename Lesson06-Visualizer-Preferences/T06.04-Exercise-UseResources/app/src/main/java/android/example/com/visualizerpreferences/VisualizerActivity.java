@@ -51,8 +51,8 @@ public class VisualizerActivity extends AppCompatActivity {
     private void setupSharedPreferences() {
         // Get all of the values from shared preferences to set it up
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        // TODO (4) Use resources here instead of the hard coded string and boolean
-        mVisualizerView.setShowBass(sharedPreferences.getBoolean("show_bass", true));
+        // Complete (4) Use resources here instead of the hard coded string and boolean
+        mVisualizerView.setShowBass(sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key), getResources().getBoolean(R.bool.pref_show_bass_default)));
         mVisualizerView.setShowMid(true);
         mVisualizerView.setShowTreble(true);
         mVisualizerView.setMinSizeScale(1);
@@ -82,11 +82,6 @@ public class VisualizerActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    /**
-     * Below this point is code you do not need to modify; it deals with permissions
-     * and starting/cleaning up the AudioInputReader
-     **/
 
     /**
      * onPause Cleanup audio stream

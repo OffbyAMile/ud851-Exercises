@@ -18,11 +18,13 @@ package android.example.com.visualizerpreferences;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.example.com.visualizerpreferences.AudioVisuals.AudioInputReader;
 import android.example.com.visualizerpreferences.AudioVisuals.VisualizerView;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -42,20 +44,30 @@ public class VisualizerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizer);
         mVisualizerView = (VisualizerView) findViewById(R.id.activity_visualizer);
-        defaultSetup();
+        setupSharedPreferences();
         setupPermissions();
     }
 
-    // TODO (1) Change the name of default setup to setupSharedPreferences
-    private void defaultSetup() {
-        // TODO (2) Get a reference to the default shared preferences from the PreferenceManager class
-        // TODO (3) Get the value of the show_bass checkbox preference and use it to call setShowBass
-        mVisualizerView.setShowBass(true);
+    // Complete (1) Change the name of default setup to setupSharedPreferences
+    private void setupSharedPreferences() {
+        //  (2) Get a reference to the default shared preferences from the PreferenceManager class
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+
+
+        mVisualizerView.setShowBass(sharedPreferences.getBoolean("show_bass", true));
+        // Complete (3) Get the value of the show_bass checkbox preference and use it to call setShowBass
+
+
+
         mVisualizerView.setShowMid(true);
         mVisualizerView.setShowTreble(true);
         mVisualizerView.setMinSizeScale(1);
         mVisualizerView.setColor(getString(R.string.pref_color_red_value));
+
     }
+
+
 
     /**
      * Methods for setting up the menu
@@ -81,14 +93,6 @@ public class VisualizerActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * Below this point is code you do not need to modify; it deals with permissions
-     * and starting/cleaning up the AudioInputReader
-     **/
-
-    /**
-     * onPause Cleanup audio stream
-     **/
     @Override
     protected void onPause() {
         super.onPause();
