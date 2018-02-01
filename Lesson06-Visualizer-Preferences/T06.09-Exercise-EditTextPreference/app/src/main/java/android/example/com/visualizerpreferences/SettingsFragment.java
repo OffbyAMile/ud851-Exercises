@@ -79,12 +79,13 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             ListPreference listPreference = (ListPreference) preference;
             int prefIndex = listPreference.findIndexOfValue(value);
             if (prefIndex >= 0) {
-                // Set the summary to that label
                 listPreference.setSummary(listPreference.getEntries()[prefIndex]);
             }
+        }else if (preference instanceof EditTextPreference) {
+            preference.setSummary(value);
+
         }
     }
-    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
