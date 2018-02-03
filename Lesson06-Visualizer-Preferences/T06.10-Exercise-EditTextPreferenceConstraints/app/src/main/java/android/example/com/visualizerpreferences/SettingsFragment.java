@@ -27,9 +27,9 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
 import android.widget.Toast;
 
-// TODO (1) Implement OnPreferenceChangeListener
+// DONE(1) Implement OnPreferenceChangeListener
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        OnSharedPreferenceChangeListener {
+        OnSharedPreferenceChangeListener, Preference.OnPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
@@ -41,6 +41,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         PreferenceScreen prefScreen = getPreferenceScreen();
         int count = prefScreen.getPreferenceCount();
 
+
+
         // Go through all of the preferences, and set up their preference summary.
         for (int i = 0; i < count; i++) {
             Preference p = prefScreen.getPreference(i);
@@ -51,6 +53,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 setPreferenceSummary(p, value);
             }
         }
+        Preference preference = findPreference(getString(R.string.pref_size_key));
+        preference.setOnPreferenceChangeListener(this);
         // TODO (3) Add the OnPreferenceChangeListener specifically to the EditTextPreference
     }
 
@@ -86,6 +90,28 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             // For EditTextPreferences, set the summary to the value's simple string representation.
             preference.setSummary(value);
         }
+    }
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        Toast error = Toast.makeText(getContext(), "Please select a number between 0.1 and 3", Toast.LENGTH_SHORT);
+
+        String sizeKey = getString(R.string.pref_size_key);
+        if (preference.getKey().equals(sizeKey)) {
+            String stringSize = (String) newValue;
+            try {
+                float size = Float.parseFloat(stringSize);
+                if (size > 3 || size <= 0) {
+                    error.show();
+                    return false;
+                }
+            } catch (NumberFormatException nfe) {
+                error.show();
+                return false;
+
+
+            }
+        }
+        return true;
     }
 
     // TODO (2) Override onPreferenceChange. This method should try to convert the new preference value
