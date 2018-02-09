@@ -1,7 +1,13 @@
 package com.example.android.waitlist;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.CharArrayBuffer;
+import android.database.ContentObserver;
 import android.database.Cursor;
+import android.database.DataSetObserver;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +64,15 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
     }
 
     // TODO (15) Create a new function called swapCursor that takes the new cursor and returns void
+    public void swapCursor(Cursor newCursor) {
+        if (mCursor != null) mCursor.close();
+        mCursor = newCursor;
+            if (newCursor != null) {
+                this.notifyDataSetChanged();
+            }
 
+
+    }
     // TODO (16) Inside, check if the current cursor is not null, and close it if so
 
     // TODO (17) Update the local mCursor to be equal to  newCursor

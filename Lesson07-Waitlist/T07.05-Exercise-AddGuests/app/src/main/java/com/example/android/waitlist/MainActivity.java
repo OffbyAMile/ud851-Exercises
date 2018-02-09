@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.android.waitlist.data.TestUtil;
+
 import com.example.android.waitlist.data.WaitlistContract;
 import com.example.android.waitlist.data.WaitlistDbHelper;
 
