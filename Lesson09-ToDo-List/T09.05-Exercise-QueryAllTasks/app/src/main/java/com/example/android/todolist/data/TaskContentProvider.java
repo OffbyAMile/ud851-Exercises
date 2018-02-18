@@ -81,6 +81,7 @@ public class TaskContentProvider extends ContentProvider {
 
 
     // Implement insert to handle requests to insert a single new row of data
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         // Get access to the task database (to write new data to)
@@ -116,19 +117,39 @@ public class TaskContentProvider extends ContentProvider {
 
 
     // Implement query to handle requests for data by URI
+    @SuppressWarnings("ConstantConditions")
     @Override
     public Cursor query(@NonNull Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
 
-        // TODO (1) Get access to underlying database (read-only for query)
+        // DONE (1) Get access to underlying database (read-only for query)
+        final SQLiteDatabase mDb = mTaskDbHelper.getReadableDatabase();
+        // Done (2) Write URI match code and set a variable to return a Cursor
+        int match = sUriMatcher.match(uri);
+        // DONE (3) Query for the tasks directory and write a default case
+        Cursor retCursor;
 
-        // TODO (2) Write URI match code and set a variable to return a Cursor
+        switch (match) {
+            // Make query for all the rows in the DataBase in the case TASKS
+            case TASKS:
+                retCursor = mDb.query(TABLE_NAME,
+                        projection,
+                        selection,
+                        selectionArgs,
+                        null,
+                        null,
+                        sortOrder);
+                break;
+                // Default will throw UnsupportedOperationException
+            default:
+                throw new UnsupportedOperationException("Unknown uri:" + uri);
+        }
 
-        // TODO (3) Query for the tasks directory and write a default case
+        // DONE (4) Set a notification URI on the Cursor and return that Cursor
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
 
-        // TODO (4) Set a notification URI on the Cursor and return that Cursor
+        return retCursor;
 
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 

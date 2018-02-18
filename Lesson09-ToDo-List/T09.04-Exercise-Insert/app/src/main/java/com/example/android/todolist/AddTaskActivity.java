@@ -16,10 +16,17 @@
 
 package com.example.android.todolist;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Toast;
+
+import com.example.android.todolist.data.TaskContract;
 
 
 public class AddTaskActivity extends AppCompatActivity {
@@ -44,13 +51,43 @@ public class AddTaskActivity extends AppCompatActivity {
      */
     public void onClickAddTask(View view) {
         // Not yet implemented
-        // TODO (6) Check if EditText is empty, if not retrieve input and store it in a ContentValues object
+        // DONE (6) Check if EditText is empty, if not retrieve input and store it in a ContentValues object
+        String input = ((EditText) findViewById(R.id.editTextTaskDescription)).getText().toString();
+        if (input.length() == 0) {
+            return;
+        }
+        /*
+          You call ContentValues here so you can get
+          the data from the database resolved into the
+          String called earlier in this case it was titled input
+          above we called input.length to check if the string
+          input was empty, there by allowing us to fill in
+          the edit text with our own task and set it to the
+          database by calling ContentValues and using the
+          ContentResolver
+        */
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskContract.TaskEntry.COLUMN_DESCRIPTION, input);
+        contentValues.put(TaskContract.TaskEntry.COLUMN_PRIORITY, mPriority);
+        // DONE (7) Insert new task data via a ContentResolver
+        /*
+        Below is where you call the ContentResolver to get the
+        ContentValues into the URI by using ContentResolver.
+        Basically you are setting the Uri variable uri by
+        calling getContentResolver() and then .insert() in the
+        insert method you need to find the DataBase entry from
+        Your database contract class followed by the subclass
+        and a , followed by the contentValues method you previously
+        instantiated.
+         */
+        Uri uri = getContentResolver().insert(TaskContract.TaskEntry.CONTENT_URI, contentValues);
 
-        // TODO (7) Insert new task data via a ContentResolver
-
-        // TODO (8) Display the URI that's returned with a Toast
+        // DONE (8) Display the URI that's returned with a Toast
         // [Hint] Don't forget to call finish() to return to MainActivity after this insert is complete
-
+            if (uri != null) {
+                Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_LONG).show();
+            }
+            finish();
     }
 
 
