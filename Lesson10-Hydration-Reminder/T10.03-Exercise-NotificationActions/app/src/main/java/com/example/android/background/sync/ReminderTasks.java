@@ -17,22 +17,39 @@ package com.example.android.background.sync;
 
 import android.content.Context;
 
+import com.example.android.background.utilities.NotificationUtils;
 import com.example.android.background.utilities.PreferenceUtilities;
 
 public class ReminderTasks {
 
     public static final String ACTION_INCREMENT_WATER_COUNT = "increment-water-count";
-    //  TODO (2) Add a public static constant called ACTION_DISMISS_NOTIFICATION
+    // (2) Add a public static constant called ACTION_DISMISS_NOTIFICATION
+
+    /*
+    * when we call this method we want it to be a static final call;
+    * after it is declared we go into the executeTask method and call
+    * an else if statement declaring that the notification can be cleared
+    * stemming from the user not acknowledging the notification
+     */
+    public static final String ACTION_DISMISS_NOTIFICATION = "dismiss-notification";
 
     public static void executeTask(Context context, String action) {
         if (ACTION_INCREMENT_WATER_COUNT.equals(action)) {
             incrementWaterCount(context);
+        } else if (ACTION_DISMISS_NOTIFICATION.equals(action)) {
+        //  (3) If the user ignored the reminder, clear the notification
+            NotificationUtils.clearAllNotifications(context);
         }
-        //      TODO (3) If the user ignored the reminder, clear the notification
+
     }
 
     private static void incrementWaterCount(Context context) {
         PreferenceUtilities.incrementWaterCount(context);
-        //      TODO (4) If the water count was incremented, clear any notifications
+        // (4) If the water count was incremented, clear any notifications
+        /*
+        in this method we will also call clearNotifications because the water count was incremented
+        by the user, therefore rendering the notification void
+       */
+        NotificationUtils.clearAllNotifications(context);
     }
 }
